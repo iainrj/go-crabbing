@@ -23,16 +23,21 @@ enum Suit {
     Spades,
 }
 
+impl fmt::Display for Suit {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Suit::Hearts => write!(f, "{}", '\u{2665}'),
+            Suit::Diamonds => write!(f, "{}", '\u{2666}'),
+            Suit::Clubs => write!(f, "{}", '\u{2663}'),
+            Suit::Spades => write!(f, "{}", '\u{2660}'),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Card {
     rank: Rank,
     suit: Suit,
-}
-
-impl fmt::Display for Card {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self.suit)
-    }
 }
 
 impl Card {
@@ -93,6 +98,6 @@ fn main() {
     deck.shuffle();
 
     if let Some(card) = deck.draw() {
-        println!("Drew card: {:?} of {:?}", card.rank, card.suit)
+        println!("Drew card: {:?} of {}", card.rank, card.suit)
     }
 }
